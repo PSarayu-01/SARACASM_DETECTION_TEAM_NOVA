@@ -1,0 +1,11 @@
+# Python 3.11 or 3.12, 64-bit. Install a CUDA build of torch first if desired.
+torch>=2.6,<3.0
+transformers==4.57.1
+scikit-learn>=1.5,<2.0
+pandas>=2.2,<3.0
+numpy>=1.26,<3.0
+fastapi>=0.115,<1.0
+pydantic>=2.9,<3.0
+uvicorn>=0.30,<1.0
+safetensors>=0.4.3
+tqdm>=4.66,<5.0

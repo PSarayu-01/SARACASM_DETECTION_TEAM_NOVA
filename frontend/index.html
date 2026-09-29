@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <title>SarcasmLens AI | Read between the lines</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#workspace"><span class="logo" aria-hidden="true">S<span>˙</span></span><span>SarcasmLens <b>AI</b></span></a>
+      <nav aria-label="Dashboard sections" role="tablist">
+        <a id="tab-workspace" class="nav-active" href="#workspace" role="tab" aria-controls="workspace" aria-selected="true" tabindex="0">Workspace</a>
+        <a id="tab-performance" href="#performance" role="tab" aria-controls="performance" aria-selected="false" tabindex="-1">Performance</a>
+        <a id="tab-history" href="#history" role="tab" aria-controls="history" aria-selected="false" tabindex="-1">History</a>
+      </nav>
+      <span id="connection" class="status" role="status"><i></i>Connecting</span>
+    </header>
+    <main>
+      <div id="workspace" class="tab-panel" role="tabpanel" aria-labelledby="tab-workspace">
+      <section class="intro">
+        <div><p class="eyebrow"><span class="spark">✦</span> LANGUAGE HAS LAYERS</p><h1>Read between <span>the lines.</span></h1><p class="subtitle">Context-Aware Sarcasm &amp; Irony Detection</p><p class="intro-copy">The same words. A different meaning. Explore how a conversation changes what comes next.</p></div>
+        <div class="model-chip"><span class="orb" aria-hidden="true">◎</span><div><strong>RoBERTa-base</strong><small>Local model · Context + response</small></div></div>
+      </section>
+      <div class="workspace-grid">
+        <section class="panel conversation-panel" aria-labelledby="conversation-title">
+          <div class="panel-heading"><div><p class="eyebrow">01 / THE CONVERSATION</p><h2 id="conversation-title">Words need a little context.</h2></div><span class="mini-icon" aria-hidden="true">☷</span></div>
+          <form id="analysis-form" novalidate>
+            <div class="chat-field"><div class="avatar context-avatar" aria-hidden="true">C</div><div class="field-body"><label for="context">Conversation Context <span>The lead-up</span></label><textarea id="context" name="context" rows="4" maxlength="20000" placeholder="What happened before the response?" required></textarea><div class="field-footer"><span>Give the model the bigger picture.</span><span id="context-count">0 characters</span></div></div></div>
+            <div class="chat-connector" aria-hidden="true"></div>
+            <div class="chat-field response-field"><div class="avatar response-avatar" aria-hidden="true">R</div><div class="field-body"><label for="response">Target Response <span>Between the lines</span></label><textarea id="response" name="response" rows="3" maxlength="10000" placeholder="The reply you want to understand…" required></textarea><div class="field-footer"><span>Meaning starts here.</span><span id="response-count">0 characters</span></div></div></div>
+            <div class="examples"><span>TRY A CONVERSATION</span><div><button type="button" class="example" data-example="0">Exam day ↗</button><button type="button" class="example" data-example="1">A little help ↗</button><button type="button" class="example" data-example="2">Rain check ↗</button></div></div>
+            <p id="error" class="error" role="alert" hidden></p>
+            <button class="analyze-button" type="submit" id="analyze-button"><span id="button-text">Analyze Conversation</span><span aria-hidden="true">↗</span></button>
+            <p class="privacy-note"><span aria-hidden="true">◇</span> Inference runs on your local machine.</p>
+          </form>
+        </section>
+        <section class="panel result-panel" aria-labelledby="result-heading" aria-live="polite" aria-busy="false" id="result-panel">
+          <div class="panel-heading"><div><p class="eyebrow">02 / THE INTERPRETATION</p><h2 id="result-heading">Beyond the words</h2></div><span class="tiny-badge">LIVE INFERENCE</span></div>
+          <div id="result-empty" class="result-empty"><div class="lens-graphic" aria-hidden="true"><span>✦</span></div><h3>A little context goes a long way.</h3><p>Add a conversation and analyze it to reveal the model’s interpretation.</p><div class="empty-line"></div><small>Actual model probabilities. Every time.</small></div>
+          <div id="result-content" hidden>
+            <div class="prediction-area"><div class="result-symbol" aria-hidden="true">✦</div><p class="eyebrow">CONTEXT-AWARE RESULT</p><h3 id="prediction-label"></h3><div class="confidence-number"><span id="confidence"></span><small>model confidence</small></div></div>
+            <div class="probability-heading"><span>Probability distribution</span><span>SOFTMAX</span></div>
+            <div class="probability-track" role="meter" aria-label="Sarcasm probability" aria-valuemin="0" aria-valuemax="100" id="probability-meter"><div id="sarcasm-bar"></div></div>
+            <div class="probability-legend"><div><span><i class="purple-dot"></i>Sarcasm</span><strong id="sarcasm-probability"></strong></div><div><span><i class="blue-dot"></i>Not sarcasm</span><strong id="not-sarcasm-probability"></strong></div></div>
+            <section class="type-card" aria-label="Estimated sarcasm type">
+              <p class="eyebrow">ESTIMATED SARCASM TYPE</p>
+              <h3 id="sarcasm-type-name">Waiting for analysis</h3>
+              <p id="sarcasm-type-confidence"></p>
+              <p id="sarcasm-type-note" class="model-note"></p>
+            </section>
+            <p class="model-note">Confidence is the model’s probability for its chosen label. It is not a guarantee of correctness.</p>
+          </div>
+        </section>
+      </div>
+      <section class="panel compare-panel" aria-labelledby="compare-heading">
+        <div class="section-header"><div><p class="eyebrow">A CHANGE IN PERSPECTIVE</p><h2 id="compare-heading">WHY CONTEXT MATTERS</h2></div><p>One response. Two ways of reading it.</p></div>
+        <div class="compare-grid"><div class="comparison-card"><div class="comparison-title"><span class="mini-icon" aria-hidden="true">“ ”</span><div><h3>Response Only</h3><p>The words on their own</p></div></div><div class="comparison-result" id="response-only-result">Waiting for your conversation</div><div class="small-track"><div id="response-only-bar"></div></div><small id="response-only-probability">Sarcasm probability appears after analysis.</small></div><span class="versus">VS</span><div class="comparison-card aware-card"><div class="comparison-title"><span class="mini-icon" aria-hidden="true">◎</span><div><h3>Context Aware</h3><p>The full conversation</p></div></div><div class="comparison-result" id="context-aware-result">Waiting for your conversation</div><div class="small-track"><div id="context-aware-bar"></div></div><small id="context-aware-probability">Sarcasm probability appears after analysis.</small></div></div>
+        <p class="comparison-note" id="comparison-note">Both views use the same fine-tuned model. Removing context is an inference comparison, not a separately trained baseline.</p>
+      </section>
+      </div>
+      <section class="panel performance-panel tab-panel" id="performance" role="tabpanel" aria-labelledby="tab-performance" hidden>
+        <div class="section-header"><div><p class="eyebrow">MEASURED, NOT ASSUMED</p><h2 id="performance-heading">MODEL PERFORMANCE</h2></div><button class="text-button" id="refresh-status" type="button">Refresh status ↻</button></div>
+        <p id="metrics-message" class="muted" role="status">Checking model performance…</p>
+        <div id="metrics-grid" class="metrics-grid" hidden><div class="metric primary-metric"><span>Macro F1 <b>PRIMARY</b></span><strong id="metric-macro_f1">—</strong></div><div class="metric"><span>Sarcasm F1</span><strong id="metric-sarcasm_f1">—</strong></div><div class="metric"><span>Accuracy</span><strong id="metric-accuracy">—</strong></div><div class="metric"><span>Precision</span><strong id="metric-precision">—</strong></div><div class="metric"><span>Recall</span><strong id="metric-recall">—</strong></div></div>
+        <p id="metrics-detail" class="comparison-note" hidden></p>
+        <div class="type-card"><h3>Sarcasm-type classifier</h3><p id="type-metrics-message" class="muted">Checking type model…</p></div>
+      </section>
+      <section class="panel history-panel tab-panel" id="history" role="tabpanel" aria-labelledby="tab-history" hidden><div class="section-header"><div><p class="eyebrow">YOUR RECENT EXPLORATIONS</p><h2 id="history-heading">Analysis history</h2></div><button type="button" class="text-button" id="clear-history">Clear history</button></div><p class="muted" id="history-empty">Your recent analyses will appear here, saved in this browser.</p><div id="history-list"></div><p id="storage-message" class="comparison-note" hidden></p></section>
+    </main>
+    <footer><span>SarcasmLens <b>AI</b></span><span>Context changes everything.</span><span>Built with RoBERTa · Runs locally</span></footer>
+  </div>
+</body>
+</html>
